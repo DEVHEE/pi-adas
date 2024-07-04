@@ -37,7 +37,7 @@ def getLaneCurve(img, display=2):
         imgLaneColor = cv2.bitwise_and(imgInvWarp, imgLaneColor)
         imgResult = cv2.addWeighted(imgResult, 1, imgLaneColor, 1, 0)
         midY = 450
-        cv2.putText(imgResult, str(curve), (wT // 2 - 80, 85), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 3)
+        cv2.putText(imgResult, str(curve), (wT // 2 - 20, 85), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 0, 255), 3)
         cv2.line(imgResult, (wT // 2, midY), (wT // 2 + (curve * 3), midY), (255, 0, 255), 5)
         cv2.line(imgResult, ((wT // 2 + (curve * 3)), midY - 25), (wT // 2 + (curve * 3), midY + 25), (0, 255, 0), 5)
         for x in range(-30, 30):
@@ -46,11 +46,11 @@ def getLaneCurve(img, display=2):
                      (w * x + int(curve // 50), midY + 10), (0, 0, 255), 2)
 
     if display == 2:
-        imgStacked = utils.stackImages(0.7, ([img, imgWrapPoints, imgWrap],
-                                             [imgHist, imgLaneColor, imgResult]))
+        imgStacked = utils.stackImages(0.7, ([img, imgWrapPoints], [imgWrap, imgHist], [imgLaneColor, imgResult]))
         cv2.imshow('Image Processing', imgStacked)
     elif display == 1:
         cv2.imshow('Result', imgResult)
+
     return curve
 
 

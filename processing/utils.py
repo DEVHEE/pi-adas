@@ -45,6 +45,11 @@ def valTrackbars(wT, hT):
 
 
 def drawPoints(img, points):
+    cv2.line(img, (int(points[0][0]), int(points[0][1])), (int(points[1][0]), int(points[1][1])), (0, 255, 255), 3)
+    cv2.line(img, (int(points[1][0]), int(points[1][1])), (int(points[3][0]), int(points[3][1])), (0, 255, 255), 3)
+    cv2.line(img, (int(points[3][0]), int(points[3][1])), (int(points[2][0]), int(points[2][1])), (0, 255, 255), 3)
+    cv2.line(img, (int(points[2][0]), int(points[2][1])), (int(points[0][0]), int(points[0][1])), (0, 255, 255), 3)
+
     for x in range(4):
         cv2.circle(img, (int(points[x][0]), int(points[x][1])), 10, (0, 0, 255), cv2.FILLED)
     return img
@@ -69,6 +74,7 @@ def getHistogram(img, minPer=0.1, display=False, region=1):
         for x, intensity in enumerate(hisValues):
             cv2.line(imgHist, (x, img.shape[0]), (x, img.shape[0] - intensity//255//region), (255, 0, 255), 1)
             cv2.circle(imgHist, (basePoint, img.shape[0]), 20, (0, 255, 255), cv2.FILLED)
+            cv2.line(imgHist, (basePoint, img.shape[0]), (basePoint, 0), (255, 255, 0), 3)
         return basePoint, imgHist
     return basePoint
 
