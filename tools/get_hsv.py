@@ -1,4 +1,4 @@
-# import modules
+# import processing
 import cv2
 import numpy as np
 
@@ -10,7 +10,7 @@ import numpy as np
 # cap.set(4, frameHeight)
 
 # use video
-cap = cv2.VideoCapture('../sample.mp4')
+cap = cv2.VideoCapture('../assets/video/sample.mp4')
 frameCounter = 0
 
 

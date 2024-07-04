@@ -1,7 +1,7 @@
-# import modules
+# import processing
 import cv2
 import numpy as np
-import utils
+from processing import utils
 
 curveList = []
 avgVal = 10
@@ -55,7 +55,7 @@ def getLaneCurve(img, display=2):
 
 
 if __name__ == '__main__':
-    cap = cv2.VideoCapture("sample.mp4")
+    cap = cv2.VideoCapture("./assets/video/sample.mp4")
     vidWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     vidHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     initialTrackBarVals = [147, 117, 68, 320]

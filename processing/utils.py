@@ -1,4 +1,4 @@
-# import modules
+# import processing
 import cv2
 import numpy as np
 
