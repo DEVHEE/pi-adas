@@ -1,14 +1,15 @@
+# import modules
 import cv2
 import numpy as np
 
-### Use Camera ###
+# use camera
 # frameWidth = 720
 # frameHeight = 360
 # cap = cv2.VideoCapture(1)
 # cap.set(3, frameWidth)
 # cap.set(4, frameHeight)
 
-### Use Video ###
+# use video
 cap = cv2.VideoCapture('../sample.mp4')
 frameCounter = 0
 
@@ -17,6 +18,7 @@ def empty(i):
     pass
 
 
+# get width, height of frame
 vidWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 vidHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
