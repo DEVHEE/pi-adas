@@ -34,8 +34,8 @@ def initCameraLR():
     for i in range(45):
         servo_cameraLR.angle = 35 + i
         time.sleep(0.005)
-        
-        
+
+
 def initCameraUD():
     for i in range(45):
         servo_cameraUD.angle = 60 + i
@@ -43,7 +43,15 @@ def initCameraUD():
     time.sleep(0.5)
     for i in range(45):
         servo_cameraUD.angle = 105 - i
-        time.sleep(0.005)   
+        time.sleep(0.005)
+
+
+def initServo():
+    initHandle()  # LEFT 45 - 90 - 135 RIGHT
+    time.sleep(0.5)
+    initCameraLR()  # LEFT 125 - 80 - 35 RIGHT
+    time.sleep(0.5)
+    initCameraUD()  # DOWN 60 - 105 UP
 
 
 i2c = board.I2C()
@@ -55,6 +63,4 @@ servo_handle = servo.Servo(pca.channels[0])
 servo_cameraLR = servo.Servo(pca.channels[1])
 servo_cameraUD = servo.Servo(pca.channels[2])
 
-initHandle()  # LEFT 45 - 90 - 135 RIGHT
-initCameraLR()  # LEFT 125 - 80 - 35 RIGHT
-initCameraUD()  # DOWN 60 - 105 UP
+initServo()
