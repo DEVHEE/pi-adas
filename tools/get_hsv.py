@@ -1,16 +1,16 @@
-# import processing
+# import modules
 import cv2
 import numpy as np
 
 # use camera
-# frameWidth = 720
-# frameHeight = 360
-# cap = cv2.VideoCapture(1)
-# cap.set(3, frameWidth)
-# cap.set(4, frameHeight)
+frameWidth = 480
+frameHeight = 240
+cap = cv2.VideoCapture(0)
+cap.set(3, frameWidth)
+cap.set(4, frameHeight)
 
 # use video
-cap = cv2.VideoCapture('../assets/video/sample.mp4')
+# cap = cv2.VideoCapture('../assets/video/sample.mp4')
 frameCounter = 0
 
 
