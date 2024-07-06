@@ -51,7 +51,7 @@ def initServo():
     time.sleep(0.5)
     initCameraLR()  # LEFT 125 - 80 - 35 RIGHT
     time.sleep(0.2)
-    initCameraUD()  # DOWN 60 - 105 UP
+    initCameraUD()  # UP 180 - 120 DOWN
 
 
 i2c = board.I2C()
