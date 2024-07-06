@@ -5,6 +5,32 @@ import numpy as np
 from modules import img_processing as imgproc
 from modules import pca9685_servo as servo
 
+import time
+from picar import front_wheels, back_wheels, setup
+
+setup()
+
+fw = front_wheels.Front_Wheels(db='config')
+bw = back_wheels.Back_Wheels(db='config')
+
+
+def set_speed(speed):
+    bw.speed = speed
+
+
+def backward():
+    bw.backward()
+
+
+def stop():
+    bw.stop()
+    
+
+
+def turn(angle):
+    fw.turn(angle)
+
+
 curveList = []
 avgVal = 10
 
@@ -57,6 +83,7 @@ def getLaneCurve(img, display=2):
 
 
 if __name__ == '__main__':
+    # use video
     # cap = cv2.VideoCapture("./assets/video/sample.mp4")
 
     # use camera
@@ -68,29 +95,37 @@ if __name__ == '__main__':
 
     vidWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     vidHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    initialTrackBarVals = [147, 117, 68, 320]
+    initialTrackBarVals = [43, 92, 0, 201]
     imgproc.initializeTrackbars(initialTrackBarVals, vidWidth, vidHeight)
 
     frameCounter = 0
     curveList = []
+    try:
+        while True:
+            frameCounter += 1
+            if cap.get(cv2.CAP_PROP_FRAME_COUNT) == frameCounter:
+                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                frameCounter = 0
 
-    while True:
-        frameCounter += 1
-        if cap.get(cv2.CAP_PROP_FRAME_COUNT) == frameCounter:
-            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            frameCounter = 0
+            success, img = cap.read()
+            img = cv2.resize(img, (vidWidth, vidHeight))
+            curve = getLaneCurve(img, display=2)
+            # print(curve)
+            if curve < 0:
+                way = "LEFT"
+            elif curve > 0:
+                way = "RIGHT"
+            else:
+                way = "STRAIGHT"
+            print("[INFO] Handle Servo: {}, {} degree".format(way, 2 * curve))
 
-        success, img = cap.read()
-        img = cv2.resize(img, (vidWidth, vidHeight))
-        curve = getLaneCurve(img, display=2)
-        # print(curve)
-        if curve < 0:
-            way = "LEFT"
-        elif curve > 0:
-            way = "RIGHT"
-        else:
-            way = "STRAIGHT"
-        print("[INFO] Handle Servo: {}, {} degree".format(way, 2 * curve))
-        servo.servo_handle.angle = 90 + 2 * curve
-        # cv2.imshow('vid', img)
-        cv2.waitKey(1)
+            turn(90 + 2 * curve)
+            set_speed(16)
+            backward()
+
+            # servo.servo_handle.angle = 90 + 2 * curve
+            # cv2.imshow('vid', img)
+            cv2.waitKey(1)
+    except KeyboardInterrupt:
+        stop()
+        
